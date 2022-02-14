@@ -1,0 +1,35 @@
+{
+  "name": "blumilksoftware/escooters",
+  "type": "project",
+  "authors": [
+    {
+      "name": "Krzysztof Rewak",
+      "email": "krzysztof.rewak@blumilk.pl"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-dom": "*",
+    "guzzlehttp/guzzle": "^7.0.1",
+    "illuminate/support": "^9.0",
+    "symfony/css-selector": "^5.3",
+    "symfony/dom-crawler": "^5.3",
+    "vlucas/phpdotenv": "^5.4"
+  },
+  "require-dev": {
+    "blumilksoftware/codestyle": "^0.9"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "EScooters\\": "src/"
+    }
+  },
+  "scripts": {
+    "ecs": "./vendor/bin/ecs check",
+    "ecsf": "./vendor/bin/ecs check --fix"
+  }
+}

@@ -1,0 +1,276 @@
+<html lang="en">
+    <head>
+        <title>eScooters map</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/krzysztofrewak/flat-flags-iconset@latest/style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+        <style>
+            #map {
+                height: 640px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container mx-auto flex justify-center items-center bg-white p-12 mb-12">
+            <div class="pr-24">
+                <h1 class="text-5xl font-bold">
+                    Looking for an e-scooter?
+                </h1>
+                <p class="pt-3">There are plenty of e-scooter providers, so sometimes you can be confused which app should you use during your trips. I know this problem. This little map can help you with planning your vacations or business trips.</p>
+            </div>
+            <div class="p-4">
+                <img src="./undraw_scooter.svg" alt="Man riding a e-scooter" class="mx-auto">
+            </div>
+        </div>
+
+        <div class="container mx-auto flex" id="application">
+            <div class="w-64">
+                <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                    Countries
+                </h2>
+                <ul role="list" class="mt-3 grid grid-cols-1 gap-2">
+                    <li class="h-16 col-span-1 flex shadow-sm rounded-md cursor-pointer"
+                            v-show="!selected.provider || country.providers.includes(selected.provider)"
+                            v-for="country in countries"
+                            @click="selectCountry(country)"
+                            :class="{ 'opacity-25': selected.country && selected.country !== country.code }">
+                        <div class="flex-shrink-0 flex items-center bg-gray-100 justify-center w-16 rounded-l-md">
+                            <i class="huge flat flag" :class="country.code"></i>
+                        </div>
+                        <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                            <div class="flex-1 px-4 py-2 text-sm truncate">
+                                <span class="text-gray-900 font-medium">{{ country.name }}</span>
+                                <p class="text-gray-500">
+                                    {{ country.providers.length }} {{ pluralize('provider', country.providers.length) }},
+                                    {{ country.cities.length }} {{ pluralize('city', country.cities.length) }}
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="w-64 ml-2">
+                <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide">
+                    E-scooters providers
+                </h2>
+                <ul role="list" class="mt-3 grid grid-cols-1 gap-2">
+                    <li class="h-16 col-span-1 flex shadow-sm rounded-md cursor-pointer"
+                            v-show="!selected.country || provider.countries.includes(selected.country)"
+                            v-for="provider in providers"
+                            @click="selectProvider(provider)"
+                            :class="{ 'opacity-25': selected.provider && selected.provider !== provider.id }">
+                        <div class="flex-shrink-0 flex items-center justify-center bg-gray-200 w-16 rounded-l-md" :style="'background: ' + provider.background">
+                            <img :src="provider.logo" alt="">
+                        </div>
+                        <div class="flex-1 flex items-center justify-between border-t border-r border-b border-gray-200 bg-white rounded-r-md truncate">
+                            <div class="flex-1 px-4 py-2 text-sm truncate">
+                                <span class="text-gray-900 font-medium">{{ provider.name }}</span>
+                                <p class="text-gray-500">{{ provider.cities }} cities</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="flex-1 ml-2">
+                <h2 class="text-gray-500 text-xs font-medium uppercase tracking-wide mb-3">Map</h2>
+                <div id="map">
+                    <l-map class="rounded-md" :zoom="3" ref="map">
+                        <l-tile-layer :url="layer"></l-tile-layer>
+                        <l-marker v-for="marker in markers" :lat-lng="marker.coordinates" :name="marker.name">
+                            <l-tooltip :options="{ direction: 'right', offset: [16, 2] }">
+                                <i class="flat flag" :class="marker.country"></i>
+                                {{ marker.name }}:
+                                <span class="capitalize">
+                                    {{ marker.providers.join(", ") }}
+                                </span>
+                            </l-tooltip>
+                            <l-icon :icon-size="dynamicSize" :icon-anchor="dynamicAnchor" :icon-url="marker.icon"></l-icon>
+                        </l-marker>
+                    </l-map>
+                </div>
+            </div>
+        </div>
+
+        <footer class="container mx-auto my-12 text-gray-500 text-right text-sm">
+            <span class="mx-5">last build: 2022-02-11 15:25:34</span>
+            <span class="mx-5">Blumilk &copy; 2022</span>
+        </footer>
+    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="//unpkg.com/vue2-leaflet"></script>
+    <script type="text/javascript">
+      class Provider {
+        constructor (id, name, cities, countries, background) {
+          this.id = id
+          this.name = name
+          this.cities = cities
+          this.countries = countries
+          this.logo = './providers/' + id + '.png'
+          this.background = background
+        }
+      }
+
+      class Country {
+        constructor (name, code, providers, cities) {
+          this.name = name
+          this.code = code
+          this.providers = providers
+          this.cities = cities
+        }
+      }
+
+      class City {
+        constructor (name, country, coordinates, providers, icon) {
+          this.name = name
+          this.country = country
+          this.coordinates = [coordinates.lat, coordinates.lng]
+          this.providers = providers
+          this.icon = './cities/' + icon + '.png'
+        }
+      }
+
+      new Vue({
+        el: '#application',
+        data () {
+          return {
+            layer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            iconSize: 32,
+            providers: [],
+            countries: [],
+            cities: [],
+            selected: {
+              country: '',
+              provider: ''
+            }
+          }
+        },
+        computed: {
+          markers () {
+            let markers = this.cities
+            if (this.selected.provider) {
+              markers = markers.filter(marker => marker.providers.includes(this.selected.provider))
+            }
+            if (this.selected.country) {
+              markers = markers.filter(marker => marker.country === this.selected.country)
+            }
+            return markers
+          },
+          dynamicSize () {
+            return [this.iconSize, this.iconSize]
+          },
+          dynamicAnchor () {
+            return [this.iconSize / 2, this.iconSize / 2]
+          }
+        },
+        components: {
+          'l-map': window.Vue2Leaflet.LMap,
+          'l-tile-layer': window.Vue2Leaflet.LTileLayer,
+          'l-marker': window.Vue2Leaflet.LMarker,
+          'l-icon': window.Vue2Leaflet.LIcon,
+          'l-tooltip': window.Vue2Leaflet.LTooltip
+        },
+        methods: {
+          pluralize (word, number) {
+            if (word === 'city' && number !== 1) {
+              return 'cities'
+            }
+
+            return word + (number === 1 ? '' : 's')
+          },
+          selectProvider (provider) {
+            if (this.selected.provider !== provider.id) {
+              this.selected.provider = provider.id
+            } else {
+              this.selected.provider = ''
+            }
+
+            this.centerMapToMarkers()
+          },
+          selectCountry (country) {
+            if (this.selected.country !== country.code) {
+              this.selected.country = country.code
+            } else {
+              this.selected.country = ''
+            }
+
+            this.centerMapToMarkers()
+          },
+          centerMapToMarkers () {
+            let north = null
+            let east = null
+            let west = null
+            let south = null
+
+            for (let marker of this.markers) {
+              console.log(marker.coordinates)
+              if (north === null || marker.coordinates[0] > north[0]) {
+                north = marker.coordinates
+              }
+              if (south === null || marker.coordinates[0] < south[0]) {
+                south = marker.coordinates
+              }
+              if (east === null || marker.coordinates[1] > east[1]) {
+                east = marker.coordinates
+              }
+              if (west === null || marker.coordinates[1] < west[1]) {
+                west = marker.coordinates
+              }
+            }
+
+            Vue.nextTick(() => {
+              const map = this.$refs.map.mapObject
+              map.fitBounds([north, east, south, west])
+              if (map.getZoom() === 18) {
+                map.setZoom(12)
+              }
+            })
+          }
+        },
+        mounted () {
+          fetch('./data/cities.json').then(response => response.json()).then(data => {
+            for (const code in data) {
+              let city = data[code]
+              this.cities.push(
+                new City(
+                  city.name,
+                  city.country,
+                  city.coordinates,
+                  city.providers,
+                  city.icon
+                )
+              )
+            }
+
+            this.centerMapToMarkers()
+          })
+          fetch('./data/countries.json').then(response => response.json()).then(data => {
+            for (const code in data) {
+              let country = data[code]
+              this.countries.push(new Country(country.name, country.code, country.providers, country.cities))
+            }
+          })
+          fetch('./data/providers.json').then(response => response.json()).then(data => {
+            for (const code in data) {
+              let provider = data[code]
+              this.providers.push(
+                new Provider(
+                  provider.id,
+                  provider.name,
+                  provider.cities,
+                  provider.countries,
+                  provider.background
+                )
+              )
+            }
+          })
+        }
+      })
+    </script>
+</html>
