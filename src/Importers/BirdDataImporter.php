@@ -6,10 +6,11 @@ namespace EScooters\Importers;
 
 use DOMElement;
 use EScooters\Exceptions\CityNotAssignedToAnyCountryException;
+use EScooters\Importers\DataSources\HtmlDataSource;
 use EScooters\Utils\HardcodedCitiesToCountriesAssigner;
 use Symfony\Component\DomCrawler\Crawler;
 
-class BirdDataImporter extends DataImporter
+class BirdDataImporter extends DataImporter implements HtmlDataSource
 {
     protected Crawler $sections;
 

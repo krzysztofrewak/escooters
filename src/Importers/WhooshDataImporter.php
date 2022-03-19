@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace EScooters\Importers;
 
-class WhooshDataImporter extends DataImporter
+use EScooters\Importers\DataSources\HardcodedDataSource;
+
+class WhooshDataImporter extends DataImporter implements HardcodedDataSource
 {
     public function getBackground(): string
     {

@@ -6,7 +6,7 @@
 |---|---|---|
 | 1 | Lime | webscrapped |
 | 2 | Bolt | web API |
-| 3 | Tier | webscrapped |
+| 3 | Tier | web API |
 | 4 | Bird | webscrapped with partially estimated countries |
 | 5 | Voi | webscrapped |
 | 6 | Spin | webscrapped |
@@ -15,6 +15,7 @@
 | 9 | Quick | webscrapped |
 | 10 | Neuron | partially webscrapped |
 | 11 | Whoosh | hardcoded |
+| 12 | Helbiz | hardcoded |
 
 ### Screenshot
 

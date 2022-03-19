@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace EScooters\Importers;
 
 use DOMElement;
+use EScooters\Importers\DataSources\HtmlDataSource;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 
-class LinkDataImporter extends DataImporter
+class LinkDataImporter extends DataImporter implements HtmlDataSource
 {
     protected Crawler $sections;
 
