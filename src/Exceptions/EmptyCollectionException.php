@@ -10,7 +10,7 @@ use Throwable;
 
 class EmptyCollectionException extends Exception
 {
-    public function __construct(Provider $provider, Throwable $previous = null)
+    public function __construct(Provider $provider, ?Throwable $previous = null)
     {
         parent::__construct(previous: $previous);
         $this->message = "{$provider->getName()} import failed.";

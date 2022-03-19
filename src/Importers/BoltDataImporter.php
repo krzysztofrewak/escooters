@@ -13,7 +13,8 @@ class BoltDataImporter extends DataImporter implements JsonDataSource
     protected array $fetchedCityDictionary = [];
     protected array $fetchedCountriesDictionary = [];
 
-    public function getBackground(): string {
+    public function getBackground(): string
+    {
         return "#24f0a0";
     }
 

@@ -12,7 +12,8 @@ class LimeDataImporter extends DataImporter implements HtmlDataSource
 {
     protected Crawler $sections;
 
-    public function getBackground(): string {
+    public function getBackground(): string
+    {
         return "#00DE00";
     }
 

@@ -35,7 +35,7 @@ class LinkDataImporter extends DataImporter implements HtmlDataSource
         foreach ($this->sections as $section) {
             foreach ($section->childNodes as $node) {
                 $countryName = trim($node->nodeValue);
-                if (in_array($countryName, ["Tech-Enabled Compliance", "COVID-19 RAPID RESPONSE CASE STUDY"])) {
+                if (in_array($countryName, ["Tech-Enabled Compliance", "COVID-19 RAPID RESPONSE CASE STUDY"], true)) {
                     continue;
                 }
 

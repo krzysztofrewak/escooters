@@ -28,7 +28,7 @@ class Cities implements JsonSerializable
             return $this->cities[$slug];
         }
 
-        if (is_null($country)) {
+        if ($country === null) {
             $this->assignCountry($slug);
         }
 

@@ -32,7 +32,9 @@ class Provider implements JsonSerializable
         return $this->name;
     }
 
-    /** @return Collection<City> */
+    /**
+     * @return Collection<City>
+     */
     public function getCities(): Collection
     {
         return $this->cities;

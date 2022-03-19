@@ -14,8 +14,7 @@ class Country implements JsonSerializable
     public function __construct(
         protected string $id,
         protected string $name,
-    ) {
-    }
+    ) {}
 
     public function getId(): string
     {

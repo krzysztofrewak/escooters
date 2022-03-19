@@ -41,12 +41,12 @@ class SpinDataImporter extends DataImporter implements HtmlDataSource
                 str_contains($nodeClasses, "locations-list-") => ucfirst(str_replace(
                     "locations-list-",
                     "",
-                    implode("", array_filter(explode(" ", $nodeClasses), fn(string $c): bool => $c !== "locations-list-wrapper"))
+                    implode("", array_filter(explode(" ", $nodeClasses), fn(string $c): bool => $c !== "locations-list-wrapper")),
                 )),
                 default => "United States",
             };
 
-            if($countryName === "United States") {
+            if ($countryName === "United States") {
                 $cityName = explode(", ", $cityName)[0];
             }
 

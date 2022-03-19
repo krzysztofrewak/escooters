@@ -18,7 +18,7 @@
     "vlucas/phpdotenv": "^5.4"
   },
   "require-dev": {
-    "blumilksoftware/codestyle": "^0.9"
+    "blumilksoftware/codestyle": "^0.10"
   },
   "config": {
     "optimize-autoloader": true,
