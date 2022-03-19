@@ -44,7 +44,13 @@ class TierDataImporter extends DataImporter implements JsonDataSource
 
             $cities = explode(",", $entry["headline"]);
             foreach ($cities as $cityName) {
-                $city = $this->cities->retrieve(trim($cityName), $country);
+                $cityName = trim($cityName);
+
+                if ($cityName === "Kundtjänst" || $cityName === "Dornbirndie") {
+                    continue;
+                }
+
+                $city = $this->cities->retrieve($cityName, $country);
                 $this->provider->addCity($city);
             }
         }
