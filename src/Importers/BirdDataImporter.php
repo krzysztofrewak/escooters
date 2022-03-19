@@ -36,13 +36,12 @@ class BirdDataImporter extends DataImporter implements HtmlDataSource
             $country = null;
 
             foreach ($section->childNodes as $node) {
-                if(is_null($country) || $country->getId() !== "us") {
+                if ($country === null || $country->getId() !== "us") {
                     $country = null;
                 }
 
                 $value = trim($node->nodeValue);
                 if ($value) {
-
                     if ($node->getAttribute("class") === "region-title") {
                         if ($value === "United States") {
                             $country = $this->countries->retrieve("United States");

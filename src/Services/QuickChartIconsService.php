@@ -19,7 +19,7 @@ class QuickChartIconsService
         }
 
         foreach ($this->combinations as $index => $combination) {
-            if(file_exists("./public/cities/$index.png")) {
+            if (file_exists("./public/cities/${index}.png")) {
                 continue;
             }
 
@@ -30,7 +30,7 @@ class QuickChartIconsService
                         [
                             "data" => array_map(fn(Provider $provider): int => 1, array_values($combination)),
                             "backgroundColor" => array_map(fn(Provider $provider): string => str_replace("#", "%23", $provider->getBackground()), array_values($combination)),
-                        ]
+                        ],
                     ],
                 ],
                 "options" => [
@@ -42,8 +42,8 @@ class QuickChartIconsService
                 ],
             ]);
 
-            $url = "https://quickchart.io/chart?w=48&h=48&c=$json";
-            file_put_contents("./public/cities/$index.png", file_get_contents($url));
+            $url = "https://quickchart.io/chart?w=48&h=48&c=${json}";
+            file_put_contents("./public/cities/${index}.png", file_get_contents($url));
         }
 
         return $this;

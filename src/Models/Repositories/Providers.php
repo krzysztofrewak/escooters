@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace EScooters\Models\Repositories;
 
 use EScooters\Models\Provider;
-use Illuminate\Support\Str;
 use JsonSerializable;
 
 class Providers implements JsonSerializable

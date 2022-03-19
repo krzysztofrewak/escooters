@@ -45,6 +45,8 @@ $dataImporters = [
     new DottDataImporter($cities, $countries),
 ];
 
+echo "Build date: " . date("Y-m-d H:i:s") . PHP_EOL . PHP_EOL;
+
 foreach ($dataImporters as $dataImporter) {
     try {
         $provider = $dataImporter->extract()->transform()->load();
@@ -59,7 +61,7 @@ foreach ($dataImporters as $dataImporter) {
 }
 
 $count = count($cities->all());
-echo "$count cities fetched." . PHP_EOL;
+echo PHP_EOL . "$count cities fetched." . PHP_EOL;
 
 $mapbox = new MapboxGeocodingService($token);
 $mapbox->setCoordinatesToCities($cities);

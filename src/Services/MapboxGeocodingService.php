@@ -52,7 +52,7 @@ class MapboxGeocodingService
             $this->cache[$city->getId()] = $coordinates;
             $city->setCoordinates($coordinates);
         } catch (GuzzleException) {
-            echo "Coordinates for $name were not fetched.";
+            echo "Coordinates for ${name} were not fetched.";
         }
 
         file_put_contents(static::CACHE_FILENAME, json_encode($this->cache, JSON_UNESCAPED_UNICODE));

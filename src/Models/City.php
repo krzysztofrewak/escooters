@@ -19,8 +19,7 @@ class City implements JsonSerializable
         protected string $id,
         protected string $name,
         protected Country $country,
-    ) {
-    }
+    ) {}
 
     public function getId()
     {

@@ -41,7 +41,7 @@ class DottDataImporter extends DataImporter implements HtmlDataSource, JsonDataS
 
             $country = null;
             $hardcoded = HardcodedCitiesToCountriesAssigner::assign($cityName);
-            if($hardcoded) {
+            if ($hardcoded) {
                 $country = $this->countries->retrieve($hardcoded);
             }
 

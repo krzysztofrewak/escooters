@@ -10,7 +10,6 @@
   "require": {
     "php": "^8.1",
     "ext-dom": "*",
-    "fabpot/goutte": "^4.0",
     "guzzlehttp/guzzle": "^7.0.1",
     "illuminate/support": "^9.0",
     "symfony/css-selector": "^5.3",
@@ -18,7 +17,7 @@
     "vlucas/phpdotenv": "^5.4"
   },
   "require-dev": {
-    "blumilksoftware/codestyle": "^0.9"
+    "blumilksoftware/codestyle": "^0.10"
   },
   "config": {
     "optimize-autoloader": true,

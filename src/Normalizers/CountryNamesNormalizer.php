@@ -76,7 +76,6 @@ class CountryNamesNormalizer
             "West Virginia",
             "Wisconsin",
             "Wyoming",
-        ]);
+        ], true);
     }
-
 }
