@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace EScooters\Importers;
 
 use DOMElement;
+use EScooters\Importers\DataSources\HtmlDataSource;
 use Symfony\Component\DomCrawler\Crawler;
 
-class LimeDataImporter extends DataImporter
+class LimeDataImporter extends DataImporter implements HtmlDataSource
 {
     protected Crawler $sections;
 

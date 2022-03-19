@@ -7,6 +7,7 @@ use EScooters\Importers\BirdDataImporter;
 use EScooters\Importers\BoltDataImporter;
 use EScooters\Importers\DataImporter;
 use EScooters\Importers\DottDataImporter;
+use EScooters\Importers\HelbizDataImporter;
 use EScooters\Importers\LimeDataImporter;
 use EScooters\Importers\LinkDataImporter;
 use EScooters\Importers\NeuronDataImporter;
@@ -30,14 +31,15 @@ $providers = new Providers();
 
 /** @var array<DataImporter> $dataImporters */
 $dataImporters = [
-    new NeuronDataImporter($cities, $countries),
-    new SpinDataImporter($cities, $countries),
     new BoltDataImporter($cities, $countries),
     new LimeDataImporter($cities, $countries),
     new QuickDataImporter($cities, $countries),
     new TierDataImporter($cities, $countries),
     new VoiDataImporter($cities, $countries),
     new LinkDataImporter($cities, $countries),
+    new SpinDataImporter($cities, $countries),
+    new NeuronDataImporter($cities, $countries),
+    new HelbizDataImporter($cities, $countries),
     new WhooshDataImporter($cities, $countries),
     new BirdDataImporter($cities, $countries),
     new DottDataImporter($cities, $countries),

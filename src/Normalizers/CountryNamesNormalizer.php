@@ -16,6 +16,8 @@ class CountryNamesNormalizer
             "Czech Republic" => "Czechia",
             "UAE" => "United Arab Emirates",
             "Uk" => "United Kingdom",
+            "Sverige" => "Sweden",
+            "Dinamarca" => "Denmark",
             default => $name,
         };
     }

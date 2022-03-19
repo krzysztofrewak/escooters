@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace EScooters\Importers;
 
+use EScooters\Importers\DataSources\HtmlDataSource;
+use EScooters\Importers\DataSources\JsonDataSource;
 use EScooters\Utils\HardcodedCitiesToCountriesAssigner;
 use GuzzleHttp\Client;
 
-class DottDataImporter extends DataImporter
+class DottDataImporter extends DataImporter implements HtmlDataSource, JsonDataSource
 {
     protected array $markers = [];
 

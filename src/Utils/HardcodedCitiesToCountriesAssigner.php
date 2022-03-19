@@ -35,6 +35,16 @@ class HardcodedCitiesToCountriesAssigner
             "Zaragoza" => "Spain",
             "Givatayim" => "Israel",
             "Ramat Gan" => "Israel",
+            "Chemnitz" => "Germany",
+            "Heilbronn" => "Germany",
+            "Kassel" => "Germany",
+            "Palermo" => "Italy",
+            "Rostock" => "Germany",
+            "Troisdorf" => "Germany",
+            "Varese" => "Italy",
+            "Catania" => "Italy",
+            "Monza" => "Italy",
+            "Padua" => "Italy",
             default => null,
         };
     }

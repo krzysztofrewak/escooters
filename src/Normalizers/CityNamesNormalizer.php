@@ -25,6 +25,7 @@ class CityNamesNormalizer
             "Torino" => "Turin",
             "Warszawa" => "Warsaw",
             "Newcastle" => "Newcastle upon Tyne",
+            "Tenerife" => "Santa Cruz De Tenerife",
             default => $name,
         };
 

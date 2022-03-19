@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace EScooters\Importers;
 
 use DOMElement;
+use EScooters\Importers\DataSources\HtmlDataSource;
 use Symfony\Component\DomCrawler\Crawler;
 
-class NeuronDataImporter extends DataImporter
+class NeuronDataImporter extends DataImporter implements HtmlDataSource
 {
     /** @var array<string, Crawler> */
     protected array $sections;

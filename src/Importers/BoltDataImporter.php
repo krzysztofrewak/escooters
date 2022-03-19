@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace EScooters\Importers;
 
+use EScooters\Importers\DataSources\JsonDataSource;
 use GuzzleHttp\Client;
 
-class BoltDataImporter extends DataImporter
+class BoltDataImporter extends DataImporter implements JsonDataSource
 {
     protected array $fetchedCities = [];
     protected array $fetchedCityDictionary = [];
