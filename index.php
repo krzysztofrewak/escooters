@@ -21,6 +21,7 @@ use EScooters\Models\Repositories\Countries;
 use EScooters\Models\Repositories\Providers;
 use EScooters\Services\MapboxGeocodingService;
 use EScooters\Services\QuickChartIconsService;
+use EScooters\Utils\BuildInfo;
 
 Dotenv::createImmutable(__DIR__)->load();
 $token = $_ENV["VUE_APP_MAPBOX_TOKEN"];
@@ -45,7 +46,8 @@ $dataImporters = [
     new DottDataImporter($cities, $countries),
 ];
 
-echo "Build date: " . date("Y-m-d H:i:s") . PHP_EOL . PHP_EOL;
+$timestamp = date("Y-m-d H:i:s");
+echo "Build date: $timestamp" . PHP_EOL . PHP_EOL;
 
 foreach ($dataImporters as $dataImporter) {
     try {
@@ -69,6 +71,13 @@ $mapbox->setCoordinatesToCities($cities);
 $mapbox = new QuickChartIconsService();
 $mapbox->generateCityIcons($cities);
 
+$info = new BuildInfo(
+    timestamp: $timestamp,
+    citiesCount: $count,
+    providersCount: count($providers->jsonSerialize()),
+);
+
 file_put_contents("./public/data/cities.json", json_encode($cities, JSON_UNESCAPED_UNICODE));
 file_put_contents("./public/data/countries.json", json_encode($countries, JSON_UNESCAPED_UNICODE));
 file_put_contents("./public/data/providers.json", json_encode($providers, JSON_UNESCAPED_UNICODE));
+file_put_contents("./public/data/info.json", json_encode($info, JSON_UNESCAPED_UNICODE));
